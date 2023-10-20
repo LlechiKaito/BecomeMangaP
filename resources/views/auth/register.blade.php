@@ -38,6 +38,17 @@
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
+        
+        <!--<div class="mt-4">-->
+        <!--   <x-input-label for="profile" :value="__('profile')" />-->
+        <!--   <x-text-input id="profile" class="block mt-1 w-full" type="text" name="profile" :value="old('profile')" required autocomplete="profile" />-->
+        <!--   <x-input-error :messages="$errors->get('profile')" class="mt-2" />-->
+        <!--</div>-->
+        
+        <div class="mb-3">
+            <label for="profile" class="form-label">Profile</label>
+            <textarea id="profile" class="form-control" name="profile" rows="4"></textarea>
+        </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">

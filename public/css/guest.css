@@ -1,0 +1,30 @@
+body{
+  background-color: rgb(243, 241, 241);
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px ;
+  padding-left: 180px;
+  background-color:white;
+}
+
+.title{
+  margin: 0 auto;
+  font-size: 35px;
+  text-decoration: none;
+  color:aqua;
+}
+
+.user-admin{
+  display: flex;
+  align-items: center;
+}
+
+.login{
+  margin-right: 10px;
+  color: blue;
+  text-decoration: none;
+}
