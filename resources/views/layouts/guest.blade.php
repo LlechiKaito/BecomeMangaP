@@ -12,6 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <link rel="stylesheet" href="/css/guest.css">
+        <link rel="stylesheet" href="/css/user.css">
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
@@ -43,7 +44,7 @@
                                 <!--<%if user_signed_in? %>-->
                                     <div class="row">
                                         <div class="col-5">
-                                            <a href="#" class="login">マイページ</a>
+                                            <a href="/users/{{ Auth::user()->id }}" class="login">マイページ</a>
                                             <!--<%= link_to "マイページ", user_path(current_user), class: "login" %>-->
                                         </div>
                                         <div class="col-5">
