@@ -17,7 +17,7 @@
             </div>
             <div class="col-3 col-md-2 border rounded-pill my-1 py-1 text-center">
                 @if ( $user->id == Auth::user()->id )
-                    <a href="#">編集</a>
+                    <a href="/profile">編集</a>
                 @endif
     <!--            <% if @user.id == current_user.id %>-->
     <!--                <%= link_to "編集", edit_user_path(@user) %>-->
