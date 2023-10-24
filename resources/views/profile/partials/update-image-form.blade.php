@@ -1,0 +1,113 @@
+<!--<%= form_with(model: @user, local: true) do |f| %>-->
+<!--  <div class="container">-->
+<!--    <div class="row justify-content-center">-->
+
+<!--      <div class="col-10">-->
+<!--        <h5 class="my-1">ヘッダー画像</h5>-->
+<!--        <%= f.file_field :ignore_image, class: "edit-form-image", id:"image_input"%>-->
+<!--      </div>-->
+
+      <!--設定していない場合グレー画像とか-->
+<!--      <%= image_tag(@user.image, id: "header_preview", class: "h-100 col-10 pb-3") %>-->
+
+<!--      <div class="modal" id="headerCropModal" tabindex="-1">-->
+<!--        <div class="modal-dialog modal-dialog-centered modal-lg">-->
+<!--          <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--              <h1 class="modal-title fs-5">ヘッダー画像編集</h1>-->
+<!--              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body row">-->
+<!--              <div id="image_preview" class="justify-content-evenly">-->
+<!--                <div class="col-6">-->
+<!--                  <img id="target" src="" class="w-100">-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                  <img id='preview' src="" class='w-100'>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--              <button type="button" class="btn btn-secondary" id="header_close">閉じる</button>-->
+<!--              <button type="button" class="btn btn-primary" id="header_submit">変更を保存</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <%= f.hidden_field :image, id: "cropped_image_data"%>-->
+
+<script>
+  imageElement = document.getElementById("image_input");
+  let cropper = null;
+  const headerCropModal = new bootstrap.Modal(document.getElementById("headerCropModal"));
+  imageElement.addEventListener("change", function (e) {
+    const preview = document.getElementById("image_preview");
+    const targetImg = document.getElementById("target");
+    const croppedPreview = document.getElementById("preview")
+    let croppedImageData;
+    preview.style.display = "flex"
+
+    if(e.target.files[0] == null)
+    {
+      return;
+    }
+
+    headerCropModal.show();
+
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        targetImg.src = event.target.result;
+        cropper = new Cropper(targetImg, {aspectRatio: 3 / 1});
+      }
+      reader.readAsDataURL(file);
+
+      targetImg.addEventListener('ready', function(){
+        let canvas = cropper.getCroppedCanvas();
+        if(canvas !== null)
+        {
+          croppedImageData = canvas.toDataURL();
+
+          croppedPreview.src = croppedImageData;
+        }
+      });
+
+      targetImg.addEventListener('cropend', function(){
+        let canvas = cropper.getCroppedCanvas();
+        if(canvas !== null)
+        {
+          croppedImageData = canvas.toDataURL();
+  
+          croppedPreview.src = croppedImageData;
+        }
+      });
+
+      document.getElementById("header_submit").addEventListener("click", function(){
+        document.getElementById("cropped_image_data").value = croppedImageData;
+        document.getElementById("header_preview").src = croppedImageData;
+        cropper.destroy();
+        headerCropModal.hide();
+        canvas = null;
+        croppedImageData = null;
+        imageElement.value = null;
+      });
+
+      document.getElementById("header_close").addEventListener("click", function()
+      {
+        cropper.destroy();
+        headerCropModal.hide();
+        canvas = null;
+        croppedImageData = null;
+        imageElement.value = null;
+      });
+    } else {
+      targetImg.src = ""; // ファイルが未選択の場合はプレビューをクリア
+      preview.style.display = "none"; // プレビューコンテナを非表示
+      cropperControls.style.display = "none"; // クロップコントロールを非表示
+    }
+  });
+</script>
+      
+あとでやる
